@@ -130,54 +130,49 @@
     </div>
 
     <script>
-        function calculateWeight() {
-    const weightInput = document.getElementById("weight");
-    const errorMessage = document.getElementById("error-message");
-    const resultsDiv = document.getElementById("results");
-
-    let weight = parseFloat(weightInput.value);
-    let units = document.querySelector('input[name="units"]:checked').value;
-
-    // Clear previous results and errors
-    errorMessage.style.display = "none";
-    resultsDiv.style.display = "none";
-
-    if (isNaN(weight) || weight <= 0) {
-        errorMessage.textContent = "Please enter a valid weight.";
-        errorMessage.style.display = "block";
-        return;
-    }
-
-    // Send a POST request to the Python backend
-    fetch("http://localhost:8000", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `weight=${weight}&units=${units}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            errorMessage.textContent = data.error;
-            errorMessage.style.display = "block";
-            return;
+        function roundTo25(value) {
+            return Math.round(value / 25) * 25;
         }
 
-        // Update the results
-        document.getElementById("therapeutic").textContent = data.therapeutic;
-        document.getElementById("level_I").textContent = data.level_I;
-        document.getElementById("level_II").textContent = data.level_II;
-        document.getElementById("level_III").textContent = data.level_III;
-        document.getElementById("level_IV").textContent = data.level_IV;
-        document.getElementById("eiriel").textContent = data.eiriel;
+        function calculateWeight() {
+            const weightInput = document.getElementById("weight");
+            const errorMessage = document.getElementById("error-message");
+            const resultsDiv = document.getElementById("results");
 
-        resultsDiv.style.display = "block";
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        errorMessage.textContent = "An error occurred while calculating.";
-        errorMessage.style.display = "block";
-    });
-}
+            let weight = parseFloat(weightInput.value);
+            let units = document.querySelector('input[name="units"]:checked').value;
+
+            // Clear previous results and errors
+            errorMessage.style.display = "none";
+            resultsDiv.style.display = "none";
+
+            if (isNaN(weight) || weight <= 0) {
+                errorMessage.textContent = "Please enter a valid weight.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            if (units == "2") {
+                weight *= 2.205;
+            }
+
+            const therapeutic = 25;
+            const level_I = roundTo25(0.866 * weight + 26.3);
+            const level_II = roundTo25(1.77 * weight + 49.4);
+            const level_III = roundTo25(500 + (weight - 20) * 20);
+            const level_IV = roundTo25(700 + (weight - 28) * 20);
+            const eiriel = roundTo25(1200 + (weight - 48) * 20);
+
+            // Update the results
+            document.getElementById("therapeutic").textContent = therapeutic;
+            document.getElementById("level_I").textContent = level_I;
+            document.getElementById("level_II").textContent = level_II;
+            document.getElementById("level_III").textContent = level_III;
+            document.getElementById("level_IV").textContent = level_IV;
+            document.getElementById("eiriel").textContent = eiriel;
+
+            resultsDiv.style.display = "block";
+        }
     </script>
 
 </body>
