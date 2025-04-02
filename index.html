@@ -120,12 +120,11 @@
 
         <div class="results" id="results">
             <h2>Results:</h2>
-            <p><strong>Therapeutic:</strong> <span id="therapeutic"></span></p>
-            <p><strong>Level I:</strong> <span id="level_I"></span></p>
-            <p><strong>Level II:</strong> <span id="level_II"></span></p>
-            <p><strong>Level III:</strong> <span id="level_III"></span></p>
-            <p><strong>Level IV:</strong> <span id="level_IV"></span></p>
-            <p><strong>Eiriel:</strong> <span id="eiriel"></span></p>
+            <p><strong>Threshold Effects:</strong> <span id="threshold"></span></p>
+            <p><strong>Minor Audiovisual Hallucinations:</strong> <span id="minor_av"></span></p>
+            <p><strong>Major Audiovisual Hallucinations:</strong> <span id="major_av"></span></p>
+            <p><strong>Mild Delirium:</strong> <span id="mild_delirium"></span></p>
+            <p><strong>Total Delirium:</strong> <span id="total_delirium"></span></p>
         </div>
     </div>
 
@@ -156,20 +155,18 @@
                 weight *= 2.205;
             }
 
-            const therapeutic = 25;
-            const level_I = roundTo25(0.866 * weight + 26.3);
-            const level_II = roundTo25(1.77 * weight + 49.4);
-            const level_III = roundTo25(500 + (weight - 20) * 20);
-            const level_IV = roundTo25(700 + (weight - 28) * 20);
-            const eiriel = roundTo25(1200 + (weight - 48) * 20);
+            const h = roundTo25(0.866 * weight + 26.3);
+            const t = roundTo25(1.77 * weight + 49.4);
+            const m = roundTo25(2.52 * weight + 138);
+            const a2 = roundTo25(2.92 * weight + 147);
+            const n = roundTo25(2.5 * weight + 379);
 
             // Update the results
-            document.getElementById("therapeutic").textContent = therapeutic;
-            document.getElementById("level_I").textContent = level_I;
-            document.getElementById("level_II").textContent = level_II;
-            document.getElementById("level_III").textContent = level_III;
-            document.getElementById("level_IV").textContent = level_IV;
-            document.getElementById("eiriel").textContent = eiriel;
+            document.getElementById("threshold").textContent = `${h} mg (${roundTo25(h)} mg)`;
+            document.getElementById("minor_av").textContent = `${t} mg (${roundTo25(t)} mg)`;
+            document.getElementById("major_av").textContent = `${m} mg (${roundTo25(m)} mg)`;
+            document.getElementById("mild_delirium").textContent = `${a2} mg (${roundTo25(a2)} mg)`;
+            document.getElementById("total_delirium").textContent = `${n} mg (${roundTo25(n)} mg)`;
 
             resultsDiv.style.display = "block";
         }
