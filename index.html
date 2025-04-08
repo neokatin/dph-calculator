@@ -9,6 +9,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background-color: #f0f2f5;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -94,6 +95,12 @@
             font-size: 18px;
             margin: 8px 0;
         }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
@@ -128,6 +135,10 @@
         </div>
     </div>
 
+    <footer>
+        &copy; 2025 Cristion Kjeldgard. All rights reserved.
+    </footer>
+
     <script>
         function roundTo25(value) {
             return Math.round(value / 25) * 25;
@@ -141,7 +152,6 @@
             let weight = parseFloat(weightInput.value);
             let units = document.querySelector('input[name="units"]:checked').value;
 
-            // Clear previous results and errors
             errorMessage.style.display = "none";
             resultsDiv.style.display = "none";
 
@@ -161,7 +171,6 @@
             const a2 = roundTo25(2.92 * weight + 147);
             const n = roundTo25(2.5 * weight + 379);
 
-            // Update the results
             document.getElementById("threshold").textContent = `${h} mg (${roundTo25(h)} mg)`;
             document.getElementById("minor_av").textContent = `${t} mg (${roundTo25(t)} mg)`;
             document.getElementById("major_av").textContent = `${m} mg (${roundTo25(m)} mg)`;
@@ -170,11 +179,7 @@
 
             resultsDiv.style.display = "block";
         }
-    <web page.
-
-<footer style="text-align:center; margin-top:20px; font-size:14px; color:#888;">
-        &copy; 2025 Cristion Kjeldgard. All rights reserved.
-    </footer>
+    </script>
 
 </body>
 </html>
